@@ -135,7 +135,7 @@ let removeTeam = (teamid) => {
 }
 
 // add users to teams
-let addTeamUser = (teamid, ...userids) => {
+let addTeamUser = (teamid, userids) => {
     let users = JSON.stringify({"user_ids": userids});
     fetch(`${apibase}/teams/${teamid}/users`, { headers: apiheaders, method: 'PUT', body: users })
     .then(res => {
@@ -159,6 +159,6 @@ yargs.version("0.0.1")
     .command("add-team <name>", "Create a team", {}, (argv) => createTeam(argv.name))
     .command("update-team <teamid> <name>", "Update a team", {}, (argv) => updateTeam(argv.teamid, argv.name))
     .command("remove-team <teamid>", "Remove a team", {}, (argv) => removeTeam(argv.teamid))
-    .command("add-team-users <teamid> <userids>", "Add users to a team", {}, (argv) => addTeamUser(argv.teamid, argv.userids))
+    .command("add-team-users <teamid> <userids..>", "Add users to a team", {}, (argv) => addTeamUser(argv.teamid, argv.userids))
     .help()
     .argv;
